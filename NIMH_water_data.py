@@ -121,6 +121,9 @@ def run_script():
         'Хидрометрична станция (ХМС)': 'Hydrometric Station (HMS)'
     }, axis= 1, inplace = True)
     
+        df.reset_index(inplace=True)
+        df.drop(df.columns[0], axis = 1, inplace = True)
+
     #Check if paths exist (to have for the first extraction)
     path_tab = ['../tools/bassins/Дунавски басейн.csv',\
                 '../tools/bassins/Черноморски басейн.csv',\
@@ -146,8 +149,9 @@ def run_script():
             dfs[i].to_csv('../tools/bassins/'+dataHeader[i]+'.csv',encoding='utf-8-sig')
     
     print('Done!')
-
+    
 #Run the Scrip
+#run_script()
 sch.every().day.at('05:00').do(run_script)
 while True:
     sch.run_pending()
